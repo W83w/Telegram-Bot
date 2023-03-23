@@ -1,13 +1,19 @@
+import pathlib
+
 import telebot
 import webbrowser
 from telebot import types
+import sys
+import sqlite3
+
 
 bot = telebot.TeleBot('5610828295:AAEaGF8BYKZ13hYiaOy8_Dtv1OIhxtXXuP0')
 
-
 D1 = 'Перейти на сайт'
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start']) #обрабатываю запуск бота
 def start(message):
+
+
     markup = types.ReplyKeyboardMarkup()
     btn1 = types.KeyboardButton("Перейти на сайт")
     markup.row(btn1)
@@ -17,6 +23,18 @@ def start(message):
     file = open('./Robot.png', 'rb')
     bot.send_photo(message.chat.id, file, reply_markup=markup)
     bot.register_next_step_handler(message, on_click)
+
+    con = sqlite3.connect( "itbotproger.db") # Создаю базу sql
+    cur = con.cursor()
+
+    cur.execute("""CREATE TABLE ( 
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    title TEXT NOT NULL, 
+    description_image TEXT NOT NULL, 
+    name_user TEXT NOT NULL, 
+    name_image TEXT NOT NULL);""") #Создаю таблицу если ее нет sql запросом
+    conn.commit()
 
 
 def on_click(message):

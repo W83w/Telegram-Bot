@@ -1,11 +1,7 @@
-import pathlib
-
 import telebot
 import webbrowser
 from telebot import types
-import sys
-import sqlite3
-from funcshen import sqlfunc
+
 
 
 bot = telebot.TeleBot('5610828295:AAEaGF8BYKZ13hYiaOy8_Dtv1OIhxtXXuP0')
@@ -24,7 +20,6 @@ def start(message):
     file = open('./Robot.png', 'rb')
     bot.send_photo(message.chat.id, file, reply_markup=markup)
     bot.register_next_step_handler(message, on_click)
-    sqlfunc()
 
 
 
